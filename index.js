@@ -4,8 +4,8 @@ import { useCurrentTime, getBrowser, getDeviceType } from "./utils";
 const useKeyboardOffset = () => {
   const [keyBoardOffset, setKeyBoardOffset] = useState(0);
   const container = document.getElementById("keyboardOffsetAnchor");
-  const body = document?.body || {};
-  const childNodes = body?.childNodes || [];
+  const body = document.body;
+  const childNodes = body.childNodes;
   const browser = getBrowser();
   const isMobile = getDeviceType();
   //see Safari note below
