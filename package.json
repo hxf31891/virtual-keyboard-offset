@@ -1,6 +1,6 @@
 {
   "name": "virtual-keyboard-offset",
-  "version": "1.0.0",
+  "version": "1.0.10",
   "description": "A react hook that calculates the distance that your components are offset and the size of the remaining viewport when iOS/Android mobile virtual keyboards open",
   "main": "index.js",
   "scripts": {

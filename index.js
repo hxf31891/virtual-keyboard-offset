@@ -3,15 +3,16 @@ import { useCurrentTime, getBrowser, getDeviceType } from "./utils";
 
 const useKeyboardOffset = () => {
   const [keyBoardOffset, setKeyBoardOffset] = useState(0);
-  const container = document.getElementById("keyboardOffsetAnchor");
-  const body = document.body;
-  const childNodes = body.childNodes;
+  const container = document.getElementById("keyboardOffsetAnchor") || {};
+  const body = document.body || {};
+  const childNodes = body.childNodes || [];
   const browser = getBrowser();
   const isMobile = getDeviceType();
   //see Safari note below
-  const needsBackup = isMobile && browser === "Apple Safari";
+  const needsBackup =
+    isMobile && browser === "Apple Safari" && keyBoardOffset < 0;
   //i dont want to run this function very often and overload frontends when its not needed
-  const delay = needsBackup ? 250 : 2500;
+  const delay = needsBackup ? 250 : 250000;
   const seconds = useCurrentTime(delay);
   const backupCheck = needsBackup ? seconds : 0;
 
@@ -19,9 +20,11 @@ const useKeyboardOffset = () => {
   //with the return or go buttons. Current solution is simply to keep checking if its been closed any time its open.
   //Happy to hear better work arounds here.
   useEffect(() => {
-    const bReq = container?.getBoundingClientRect();
-    if (keyBoardOffset < 0 && bReq !== keyBoardOffset) {
-      setKeyBoardOffset(bReq?.top);
+    if (container.id) {
+      const bReq = container.getBoundingClientRect() || {};
+      if (keyBoardOffset < 0 && bReq !== keyBoardOffset) {
+        setKeyBoardOffset(bReq.top);
+      }
     }
   }, [backupCheck]);
 
@@ -71,8 +74,10 @@ const useKeyboardOffset = () => {
   };
 
   const handleEvent = () => {
-    const bReq = container?.getBoundingClientRect();
-    setKeyBoardOffset(bReq?.top);
+    if (container.id) {
+      const bReq = container.getBoundingClientRect() || {};
+      setKeyBoardOffset(bReq.top);
+    }
   };
 
   return {

@@ -20,10 +20,8 @@ export function useCurrentTime(delay) {
   return date.getMilliseconds();
 }
 
-export { useCurrentTime };
-
 export const getBrowser = () => {
-  let nav = navigator?.userAgent;
+  let nav = navigator.userAgent;
   if (nav.indexOf("Firefox") > -1) {
     return "Mozilla Firefox";
   } else if (nav.indexOf("SamsungBrowser") > -1) {
